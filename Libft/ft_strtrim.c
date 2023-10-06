@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 12:21:59 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/09/08 12:24:12 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/06 18:11:55 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	int		strlen;
 	int		size;
 
+	if (s1 == NULL)
+		return (NULL);
 	strlen = ft_strlen(s1);
 	start = 0;
 	while (s1[start] && ft_matchesset(s1[start], set))

@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:54:08 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/06 13:08:35 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/06 17:57:47 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	main(void)
 {
 	void	*init;
 	void	*window;
-
-	t_map map = read_map("testmap.ber");
-	if (map.map == NULL)
-		printf("Error in readmap\n");
+	t_map	map;
+	if (!ft_read_map(&map, "testmap.ber"))
+		printf("failed map read");
+	
 	return (0);
 	init = mlx_init();
 	if (init == NULL)

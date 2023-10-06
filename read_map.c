@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/06 13:09:03 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/06 18:13:08 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,44 @@ static	size_t	line_count(const char *file)
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
+		free(line);
 		count++;
 	}
 	return (close(fd), count);
 }
 
-t_map	read_map(const char *file)
+static void	ft_failclear(t_map *map)
 {
-	t_map	map;
+	ft_clear_ml_data(&map->map);
+}
+
+int	ft_read_map(t_map *map, const char *file)
+{
+	char	*read;
 	char	*line;
 	int		linelen;
 	int		fd;
 
 	fd = open(file, O_RDONLY);
-	map.map = malloc(sizeof(char *) * line_count(file));
-	if (map.map == NULL)
-		return (close(fd), map);
 	linelen = 0;
-	while (line != NULL)
+	map->size = (t_point){0, 0};
+	map->map = (t_ml){NULL, 0, 0};
+	while (read != NULL)
 	{
-		line = get_next_line(fd);
+		read = get_next_line(fd);
+		line = ft_strtrim(read, "\n");
 		if (line != NULL)
 			linelen = ft_strlen(line);
-		if (map.size.x == 0)
-			map.size.x = linelen;
-		if (map.size.x != linelen)
+		if (map->size.x == 0)
+			map->size.x = linelen;
+		if (map->size.x != linelen)
 		{
-			while (map.size.y--)
-				free(map.map[map.size.y]);
-			return (close(fd), free(map.map), map);
+			return (close(fd), free(read), free(line), 0);
 		}
-		map.map[map.size.y] = line;
-		map.size.y++;
+		if (!ft_ml_pushback(&map->map, line))
+			return (free(line), ft_failclear(map), 0);
+		free(line);
+		map->size.y++;
 	}
-	return (close(fd), map);
+	return (close(fd), 1);
 }
