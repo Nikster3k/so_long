@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/06 18:10:25 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/08 18:16:23 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ typedef struct s_managed_string_list
 	size_t	capacity;
 }	t_ml;
 
-void	ft_clear_ml_data(t_ml *map);
+void	ft_clear_ml_data(t_ml *ml);
 int		ft_ml_pushback(t_ml *list, char *str);
-void	ft_clear_ml(t_ml *ml);
+void	ft_fullfree_ml(t_ml *ml);
 
 typedef struct s_map
 {
-	t_ml	map;
+	t_ml	mlist;
 	t_point	size;
 }	t_map;
 

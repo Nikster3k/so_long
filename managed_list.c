@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 17:24:11 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/06 18:09:28 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/08 18:16:36 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	ft_ml_pushback(t_ml *list, char *str)
 			newlist[cpyi] = list->data[cpyi];
 			cpyi++;
 		}
-		ft_clear_ml_data(list);
 		free(list->data);
 		list->data = newlist;
 		list->capacity = list->capacity * 2;
@@ -54,7 +53,8 @@ int	ft_ml_pushback(t_ml *list, char *str)
 	return (1);
 }
 
-void	ft_clear_ml(t_ml *ml)
+void	ft_fullfree_ml(t_ml *ml)
 {
+	ft_clear_ml_data(ml);
 	free(ml->data);
 }
