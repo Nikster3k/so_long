@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/09 16:32:07 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:20:11 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,14 @@ typedef enum e_error
 	NOT_RECTANGLE,
 	INVALID_SIGNS,
 	INACCESIBLE,
+	INVALID_MAP,
 	PLAYER_NUM
 
 }	t_error;
 
 //read_map.c
 int		ft_read_map(t_map *map, const char *file);
+//read_map_utils.c
 void	ft_free_map(t_map *map);
 //check_map.c
 int		ft_check_validsigns(t_map *map);

@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/09 16:43:32 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:20:33 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static	size_t	line_count(const char *file)
 
 	fd = open(file, O_RDONLY);
 	count = 0;
+	line = (char *)2;
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
@@ -28,7 +29,8 @@ static	size_t	line_count(const char *file)
 		if (line != NULL)
 			count++;
 	}
-	return (close(fd), count);
+	close(fd);
+	return (count);
 }
 
 static char	*ft_strtrim_replace(char **str, const char *set)
@@ -56,6 +58,7 @@ static int	ft_read_file(t_map *map, int fd)
 	int		error;
 
 	error = SUCCESS;
+	line = (char *)2;
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
@@ -79,9 +82,13 @@ static int	ft_read_file(t_map *map, int fd)
 int	ft_read_map(t_map *map, const char *file)
 {
 	int		fd;
+	int		linecount;
 
 	ft_init_map(map);
-	map->lines = malloc(sizeof(char *) * line_count(file));
+	linecount = line_count(file);
+	if (linecount < 2)
+		return (INVALID_MAP);
+	map->lines = malloc(sizeof(char *) * linecount);
 	if (map->lines == NULL)
 		return (MALLOC_FAIL);
 	fd = open(file, O_RDONLY);

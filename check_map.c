@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/09 16:33:23 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:21:10 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_check_validsigns(t_map *map)
 				map->pcount++;
 			else if (map->lines[y][x] == 'E')
 				map->ecount++;
-			else if (map->lines[y][x] != '0' || map->lines[y][x] != '1')
+			else if (!(map->lines[y][x] == '0' || map->lines[y][x] == '1'))
 				return (INVALID_SIGNS);
 			x++;
 		}
@@ -60,8 +60,9 @@ t_point	ft_get_playerpos(t_map *map)
 
 static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
 {
-	if (pos.x < map->size.x || pos.y < map->size.y
-		|| pos.y < 0 || pos.x < 0)
+	if (pos.x >= map->size.x || pos.y >= map->size.y
+		|| pos.y < 0 || pos.x < 0
+		|| map->lines[pos.y][pos.x] == '1' || map->lines[pos.y][pos.x] == 'F')
 		return ;
 	if (map->lines[pos.y][pos.x] == 'C')
 		count->x++;
@@ -69,22 +70,52 @@ static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
 		count->y++;
 	map->lines[pos.y][pos.x] = 'F';
 	ft_flood_fill(map, (t_point){pos.x + 1, pos.y}, tofill, count);
-	ft_flood_fill(map, (t_point){pos.x - 1, pos.y}, tofill, count);
 	ft_flood_fill(map, (t_point){pos.x, pos.y + 1}, tofill, count);
+	ft_flood_fill(map, (t_point){pos.x - 1, pos.y}, tofill, count);
 	ft_flood_fill(map, (t_point){pos.x, pos.y - 1}, tofill, count);
+}
+
+static t_map	*ft_clone_map(t_map	*map)
+{
+	t_map	*copy;
+	int		i;
+
+	copy = malloc(sizeof(t_map));
+	if (copy == NULL)
+		return (NULL);
+	*copy = *map;
+	copy->lines = malloc(sizeof(char *) * map->size.y);
+	if (copy->lines == NULL)
+	{
+		free(copy);
+		return (NULL);
+	}
+	i = 0;
+	while (i < copy->size.y)
+	{
+		copy->lines[i] = ft_strdup(map->lines[i]);
+		i++;
+	}
+	return (copy);
 }
 
 int	ft_check_map(t_map *map)
 {
 	t_point	count;
+	t_map	*copy;
 
 	count = (t_point){0, 0};
 	if (ft_check_validsigns(map) != 0)
 		return (INVALID_SIGNS);
 	if (map->pcount != 1 || map->ecount != 1)
 		return (INVALID_SIGNS);
-	ft_flood_fill(map, ft_get_playerpos(map), '0', &count);
+	copy = ft_clone_map(map);
+	if (copy == NULL)
+		return (MALLOC_FAIL);
+	ft_flood_fill(copy, ft_get_playerpos(map), '0', &count);
 	if (count.x != map->ccount || count.y == 0)
 		return (INACCESIBLE);
+	ft_free_map(copy);
+	free(copy);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:54:08 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/09 16:46:28 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:04:42 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,43 @@ int	testhook(int keycode, t_game *game)
 	if (keycode == ESCAPE_KEY)
 		mlx_loop_end(game->mlx_ptr);
 	if (keycode == SPACE_KEY)
-		mlx_string_put(game->mlx_ptr, game->win_ptr, 0, 50, 0xffffffff, "Hello world");
+		mlx_string_put(
+			game->mlx_ptr, game->win_ptr, 0, 50, 0xffffffff, "Hello world");
 	if (keycode == L_CONTROL_KEY)
 		clearwin(game);
 	ft_printf("Keycode: %i c: %c\n", keycode, keycode);
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*imgptr;
 	t_map	*map;
+	int		err;
 
+	if (argc != 2)
+		return (-1);
 	map = malloc(sizeof(t_map));
-	if (!ft_read_map(map, "maps/testmap.ber"))
-		ft_printf("failed map read");
+	err = ft_read_map(map, ft_strjoin("maps/", argv[1]));
+	if (err)
+	{
+		ft_printf("failed map read\n");
+		free(map);
+		return (err);
+	}
 	for (size_t i = 0; i < map->size.y; i++)
 		ft_printf("%s\n", map->lines[i]);
-	if (ft_check_map(map))
-		ft_printf("%s\n", "Invalid map?");
+	err = ft_check_map(map);
 	for (size_t i = 0; i < map->size.y; i++)
 		ft_printf("%s\n", map->lines[i]);
+	if (err)
+	{
+		ft_printf("Invalid map?\n");
+		free(map);
+		return (err);
+	}
 	mlx_ptr = mlx_init();
 	if (mlx_ptr == NULL)
 		return (-1);
