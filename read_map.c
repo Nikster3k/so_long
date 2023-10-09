@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/08 18:24:56 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 16:43:32 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static	size_t	line_count(const char *file)
 	{
 		line = get_next_line(fd);
 		free(line);
-		count++;
+		if (line != NULL)
+			count++;
 	}
 	return (close(fd), count);
 }
@@ -40,21 +41,21 @@ static char	*ft_strtrim_replace(char **str, const char *set)
 	return (new);
 }
 
-static void	ft_failclear(t_map *map)
+static void	ft_init_map(t_map *map)
 {
-	ft_fullfree_ml(&map->mlist);
+	map->size = (t_point){0, 0};
+	map->ccount = 0;
+	map->ecount = 0;
+	map->pcount = 0;
 }
 
-int	ft_read_map(t_map *map, const char *file)
+static int	ft_read_file(t_map *map, int fd)
 {
 	char	*line;
 	int		linelen;
-	int		fd;
+	int		error;
 
-	fd = open(file, O_RDONLY);
-	linelen = 0;
-	map->size = (t_point){0, 0};
-	map->mlist = (t_ml){NULL, 0, 0};
+	error = SUCCESS;
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
@@ -62,9 +63,30 @@ int	ft_read_map(t_map *map, const char *file)
 			linelen = ft_strlen(ft_strtrim_replace(&line, "\n"));
 		if (map->size.x == 0)
 			map->size.x = linelen;
-		if (map->size.x != linelen || !ft_ml_pushback(&map->mlist, line))
-			return (close(fd), free(line), ft_failclear(map), 0);
-		map->size.y++;
+		if (map->size.x != linelen)
+		{
+			free(line);
+			ft_free_map(map);
+			error = NOT_RECTANGLE;
+			break ;
+		}
+		if (line != NULL)
+			map->lines[map->size.y++] = line;
 	}
-	return (close(fd), 1);
+	return (error);
+}
+
+int	ft_read_map(t_map *map, const char *file)
+{
+	int		fd;
+
+	ft_init_map(map);
+	map->lines = malloc(sizeof(char *) * line_count(file));
+	if (map->lines == NULL)
+		return (MALLOC_FAIL);
+	fd = open(file, O_RDONLY);
+	if (ft_read_file(map, fd))
+		return (NOT_RECTANGLE);
+	close(fd);
+	return (SUCCESS);
 }
