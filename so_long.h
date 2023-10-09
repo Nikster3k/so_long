@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/08 18:16:23 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:24:56 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 # define SO_LONG_H
 
 # include <stdlib.h>
+# include <mlx.h>
+# include <X11/keysymdef.h>
 # include "get_next_line_bonus.h"
-# include "libft.h"
+# include "printf/ft_printf.h"
+
+# define ESCAPE_KEY 0xff1b
 
 typedef struct s_point
 {

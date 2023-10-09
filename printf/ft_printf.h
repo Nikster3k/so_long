@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 16:18:16 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/09 12:26:12 by nsassenb         ###   ########.fr       */
+/*   Created: 2023/09/11 20:44:45 by nsassenb          #+#    #+#             */
+/*   Updated: 2023/09/16 16:31:47 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include <unistd.h>
-# include <stdlib.h>
+# include <stdarg.h>
+# include "Libft/libft.h"
 
-# include <stdio.h>
-# include "printf/Libft/libft.h"
+int		ft_printf(const char *s, ...);
+int		ft_putstr_cnt(char *s);
+int		ft_putnbr_cnt(long n, int fd);
+int		ft_putunbr_cnt(unsigned int n, int fd);
+int		ft_putnbr_base(unsigned int num, const char *base);
+int		ft_printptr_cnt(size_t adress, const char *base);
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif //!BUFFER_SIZE
-
-int		ft_cstmstrlen(char *s);
-char	*get_next_line(int fd);
-char	*read_file(int fd, void **buffer);
-
-#endif //!GET_NEXT_LINE_BONUS_H
+#endif //!FT_PRINTF_H

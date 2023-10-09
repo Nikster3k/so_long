@@ -6,54 +6,56 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:54:08 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/08 22:04:11 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:15:25 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
 #include "so_long.h"
-#include <stdlib.h>
 #include <stdio.h>
 
-int	testHook(int t)
+int	testhook(int keycode, void *mlx_ptr)
 {
-	printf("%s, %i", "hello world", t);
+	if (keycode == ESCAPE_KEY)
+		mlx_loop_end(mlx_ptr);
 	return (1);
+}
+
+int	destroy(void *mlx_ptr)
+{
+	static int	i = 0;
+
+	if (i > 1000000)
+		mlx_loop_end(mlx_ptr);
+	printf("%i\n", i);
+	i++;
+	return (0);
 }
 
 int	main(void)
 {
-	void	*init;
-	void	*window;
+	void	*mlx_ptr;
+	void	*win_ptr;
 	t_map	*map;
 
 	map = malloc(sizeof(t_map));
 	if (!ft_read_map(map, "testmap.ber"))
 		printf("failed map read");
-	
 	for (size_t i = 0; i < map->mlist.size - 1; i++)
-	{
 		printf("%s\n", map->mlist.data[i]);
-	}
 	ft_fullfree_ml(&map->mlist);
 	free(map);
-
-	init = mlx_init();
-	if (init == NULL)
+	mlx_ptr = mlx_init();
+	if (mlx_ptr == NULL)
 		return (-1);
-	window = mlx_new_window(init, 640, 360, "Hello World");
-	if (window == NULL)
+	win_ptr = mlx_new_window(mlx_ptr, 640, 360, "Hello World");
+	if (win_ptr == NULL)
 	{
-		mlx_destroy_display(init);
+		mlx_destroy_display(mlx_ptr);
 		return (-2);
 	}
-	int	test = 5;
-	//int out = mlx_key_hook(init, &testHook, &test);
-	//printf("%i", out);
-	mlx_loop_hook(init, &testHook, 30052002);
-	//mlx_hook(init, )
-	mlx_loop(init);
-
-	mlx_destroy_window(init, window);
-	mlx_destroy_display(init);
+	mlx_key_hook(win_ptr, testhook, NULL);
+	mlx_loop_hook(mlx_ptr, destroy, mlx_ptr);
+	mlx_loop(mlx_ptr);
+	mlx_destroy_window(mlx_ptr, win_ptr);
+	mlx_destroy_display(mlx_ptr);
 }

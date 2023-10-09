@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   ft_putunbr_cnt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 16:18:16 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/09 12:26:12 by nsassenb         ###   ########.fr       */
+/*   Created: 2023/09/13 13:31:26 by nsassenb          #+#    #+#             */
+/*   Updated: 2023/09/16 16:23:39 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stdlib.h>
+int	ft_putunbr_cnt(unsigned int n, int fd)
+{
+	int	count;
 
-# include <stdio.h>
-# include "printf/Libft/libft.h"
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif //!BUFFER_SIZE
-
-int		ft_cstmstrlen(char *s);
-char	*get_next_line(int fd);
-char	*read_file(int fd, void **buffer);
-
-#endif //!GET_NEXT_LINE_BONUS_H
+	count = 0;
+	if (n > 9)
+		count += ft_putunbr_cnt(n / 10, fd);
+	ft_putchar_fd((n % 10) + '0', fd);
+	return (count + 1);
+}
