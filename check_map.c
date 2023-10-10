@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/09 18:24:44 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:51:15 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	ft_check_validsigns(t_map *map)
 			if (map->lines[y][x] == 'C')
 				map->ccount++;
 			else if (map->lines[y][x] == 'P')
+			{
+				map->pstart = (t_point){x, y};
 				map->pcount++;
+			}
 			else if (map->lines[y][x] == 'E')
 				map->ecount++;
 			else if (!(map->lines[y][x] == '0' || map->lines[y][x] == '1'))
@@ -36,26 +39,6 @@ int	ft_check_validsigns(t_map *map)
 		y++;
 	}
 	return (SUCCESS);
-}
-
-t_point	ft_get_playerpos(t_map *map)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < map->size.y)
-	{
-		x = 0;
-		while (x < map->size.x)
-		{
-			if (map->lines[y][x] == 'P')
-				return ((t_point){x, y});
-			x++;
-		}
-		y++;
-	}
-	return ((t_point){-1, -1});
 }
 
 static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
@@ -75,22 +58,23 @@ static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
 	ft_flood_fill(map, (t_point){pos.x, pos.y - 1}, tofill, count);
 }
 
-static t_map	ft_clone_map(t_map	*map)
+static int	ft_clone_map(t_map	*map, t_map *copy)
 {
-	t_map	copy;
 	int		i;
 
-	copy = *map;
-	copy.lines = malloc(sizeof(char *) * map->size.y);
-	if (copy.lines == NULL)
-		return (copy);
+	*copy = *map;
+	copy->lines = malloc(sizeof(char *) * map->size.y);
+	if (copy->lines == NULL)
+		return (MALLOC_FAIL);
 	i = 0;
-	while (i < copy.size.y)
+	while (i < copy->size.y)
 	{
-		copy.lines[i] = ft_strdup(map->lines[i]);
+		copy->lines[i] = ft_strdup(map->lines[i]);
+		if (copy->lines[i] == NULL)
+			ft_free_map_strings(copy);
 		i++;
 	}
-	return (copy);
+	return (SUCCESS);
 }
 
 int	ft_check_map(t_map *map)
@@ -103,10 +87,13 @@ int	ft_check_map(t_map *map)
 		return (INVALID_SIGNS);
 	if (map->pcount != 1 || map->ecount != 1)
 		return (INVALID_SIGNS);
-	copy = ft_clone_map(map);
-	ft_flood_fill(&copy, ft_get_playerpos(map), '0', &count);
+	if (ft_clone_map(map, &copy))
+		return (MALLOC_FAIL);
+	ft_flood_fill(&copy, map->pstart, '0', &count);
 	if (count.x != map->ccount || count.y == 0)
 		return (INACCESIBLE);
+	if (ft_check_for_leaks(&copy))
+		return (INVALID_MAP);
 	ft_free_map(&copy);
 	return (SUCCESS);
 }
