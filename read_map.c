@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:16:00 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/10 17:48:02 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:51:46 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,15 @@ void	ft_free_map(t_map *map)
 	free(map->lines);
 }
 
-int	ft_create_map(t_map *map, char *filepath)
+char	ft_map_getat(t_map *map, t_point pos)
+{
+	if (pos.x >= map->size.x || pos.x < 0 ||
+		pos.y >= map->size.y || pos.y < 0)
+		return ('\0');
+	return (map->lines[pos.y][pos.x]);
+}
+
+int	ft_create_map(t_map *map, const char *filepath)
 {
 	int	err;
 
