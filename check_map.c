@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 19:31:38 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:54:57 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,20 @@ static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
 
 static int	ft_clone_map(t_map	*map, t_map *copy)
 {
-	int		i;
-
 	*copy = *map;
 	copy->lines = malloc(sizeof(char *) * map->size.y);
 	if (copy->lines == NULL)
 		return (MALLOC_FAIL);
-	i = 0;
-	while (i < copy->size.y)
+	copy->size.y = 0;
+	while (copy->size.y < map->size.y)
 	{
-		copy->lines[i] = ft_strdup(map->lines[i]);
-		if (copy->lines[i] == NULL)
+		copy->lines[copy->size.y] = ft_strdup(map->lines[copy->size.y]);
+		if (copy->lines[copy->size.y] == NULL)
 		{
 			ft_free_map(copy);
 			return (MALLOC_FAIL);
 		}
-		i++;
+		copy->size.y++;
 	}
 	return (SUCCESS);
 }
