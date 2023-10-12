@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/10 17:51:15 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:49:55 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,21 @@ int	ft_check_map(t_map *map)
 {
 	t_point	count;
 	t_map	copy;
+	int		err;
 
 	count = (t_point){0, 0};
-	if (ft_check_validsigns(map) != 0)
+	err = SUCCESS;
+	if (ft_check_validsigns(map))
 		return (INVALID_SIGNS);
 	if (map->pcount != 1 || map->ecount != 1)
-		return (INVALID_SIGNS);
+		return (PLAYER_NUM);
 	if (ft_clone_map(map, &copy))
 		return (MALLOC_FAIL);
 	ft_flood_fill(&copy, map->pstart, '0', &count);
 	if (count.x != map->ccount || count.y == 0)
-		return (INACCESIBLE);
+		err = INACCESSIBLE;
 	if (ft_check_for_leaks(&copy))
-		return (INVALID_MAP);
+		err = LEAK_MAP;
 	ft_free_map(&copy);
-	return (SUCCESS);
+	return (err);
 }

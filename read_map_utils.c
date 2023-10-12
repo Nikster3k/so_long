@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
+/*   read_map_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/10 16:07:20 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:30:31 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <fcntl.h>
 
-static	size_t	line_count(const char *file)
+static	int	line_count(const char *file, int *count)
 {
 	int		fd;
-	size_t	count;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
-	count = 0;
+	if (fd < 0)
+		return (NO_FILE);
+	*count = 0;
 	line = (char *)2;
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
-		free(line);
 		if (line != NULL)
-			count++;
+			(*count)++;
+		free(line);
 	}
 	close(fd);
-	return (count);
+	return (SUCCESS);
 }
 
 static char	*ft_strtrim_replace(char **str, const char *set)
@@ -55,9 +55,7 @@ static int	ft_read_file(t_map *map, int fd)
 {
 	char	*line;
 	int		linelen;
-	int		error;
 
-	error = SUCCESS;
 	line = (char *)2;
 	while (line != NULL)
 	{
@@ -70,13 +68,14 @@ static int	ft_read_file(t_map *map, int fd)
 		{
 			free(line);
 			ft_free_map(map);
-			error = NOT_RECTANGLE;
-			break ;
+			close(fd);
+			return (NOT_RECTANGLE);
 		}
 		if (line != NULL)
 			map->lines[map->size.y++] = line;
 	}
-	return (error);
+	close(fd);
+	return (SUCCESS);
 }
 
 int	ft_read_map(t_map *map, const char *file)
@@ -85,15 +84,15 @@ int	ft_read_map(t_map *map, const char *file)
 	int		linecount;
 
 	ft_init_map(map);
-	linecount = line_count(file);
+	if (line_count(file, &linecount))
+		return (NO_FILE);
 	if (linecount < 2)
 		return (INVALID_MAP);
-	map->lines = malloc(sizeof(char *) * linecount);
+	map->lines = ft_calloc(sizeof(char *), linecount);
 	if (map->lines == NULL)
 		return (MALLOC_FAIL);
 	fd = open(file, O_RDONLY);
 	if (ft_read_file(map, fd))
 		return (NOT_RECTANGLE);
-	close(fd);
 	return (SUCCESS);
 }
