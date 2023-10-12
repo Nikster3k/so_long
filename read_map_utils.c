@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 12:30:31 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:36:05 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	ft_read_file(t_map *map, int fd)
 	{
 		line = get_next_line(fd);
 		if (line != NULL)
-			linelen = ft_strlen(ft_strtrim_replace(&line, "\n"));
+			linelen = ft_safestrlen(ft_strtrim_replace(&line, "\n"));
 		if (map->size.x == 0)
 			map->size.x = linelen;
 		if (map->size.x != linelen)

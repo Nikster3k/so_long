@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:20:50 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 16:03:03 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:38:14 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_check_player_move(t_game *game, t_point dir)
 		{
 			game->map.lines[game->player.ent.pos.y]
 			[game->player.ent.pos.x] = '0';
-			ft_printf("%i", game->player.collected++);
+			game->player.collected++;
 		}
 		else if (newpos == 'G')
 			ft_printf("Kill player\n");

@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 15:22:29 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:31:38 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static int	ft_clone_map(t_map	*map, t_map *copy)
 	{
 		copy->lines[i] = ft_strdup(map->lines[i]);
 		if (copy->lines[i] == NULL)
-			ft_free_map_strings(copy);
+		{
+			ft_free_map(copy);
+			return (MALLOC_FAIL);
+		}
 		i++;
 	}
 	return (SUCCESS);

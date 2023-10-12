@@ -10,7 +10,7 @@ GNL_SRCS = get_next_line_utils_bonus.c get_next_line_bonus.c
 
 GNL_OBJS = $(GNL_SRCS:.c=.o)
 
-ALL_SRCS =	print_error.c \
+ALL_SRCS =	print_error.c utils.c\
 			check_map.c load_anim.c \
 			check_map_extra.c main.c read_map.c \
 			draw_fts.c read_map_utils.c \

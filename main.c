@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:54:08 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 18:16:32 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:44:56 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,19 @@ void	ft_initalize_func_hooks(t_game *game)
 int	ft_destroy_game(t_game *game, int err)
 {
 	ft_free_map(&game->map);
-	if (game->coin.img_ptr != NULL)
-		mlx_destroy_image(game->mlx_ptr, game->coin.img_ptr);
-	if (game->ground.img_ptr != NULL)
-		mlx_destroy_image(game->mlx_ptr, game->ground.img_ptr);
-	if (game->wall.img_ptr != NULL)
-		mlx_destroy_image(game->mlx_ptr, game->wall.img_ptr);
-	if (game->exit.img_ptr != NULL)
-		mlx_destroy_image(game->mlx_ptr, game->exit.img_ptr);
-	if (game->player.ent.sprite.img_ptr != NULL)
-		mlx_destroy_image(game->mlx_ptr, game->player.ent.sprite.img_ptr);
+	if (game->mlx_ptr != NULL)
+	{
+		if (game->coin.img_ptr != NULL)
+			mlx_destroy_image(game->mlx_ptr, game->coin.img_ptr);
+		if (game->ground.img_ptr != NULL)
+			mlx_destroy_image(game->mlx_ptr, game->ground.img_ptr);
+		if (game->wall.img_ptr != NULL)
+			mlx_destroy_image(game->mlx_ptr, game->wall.img_ptr);
+		if (game->exit.img_ptr != NULL)
+			mlx_destroy_image(game->mlx_ptr, game->exit.img_ptr);
+		if (game->player.ent.sprite.img_ptr != NULL)
+			mlx_destroy_image(game->mlx_ptr, game->player.ent.sprite.img_ptr);
+	}
 	if (game->mlx_ptr != NULL && game->win_ptr != NULL)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	if (game->mlx_ptr != NULL)

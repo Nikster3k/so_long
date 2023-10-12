@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:54:02 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/11 16:13:34 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:27:54 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@
 // 		itername[len + 1] = i + '0';
 // 		temppath = ft_strjoin(filepath, itername);
 // 		fd = open(temppath, O_RDONLY);
-// 		ft_lstadd_back(anim->imgs, ft_lstnew(mlx_xpm_file_to_image(NULL, temppath,)))
+// 		ft_lstadd_back(
+//			anim->imgs, ft_lstnew(mlx_xpm_file_to_image(NULL, temppath,)))
 // 		free(temppath);
 // 		close(fd);
 // 		i++;

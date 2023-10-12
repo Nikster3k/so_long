@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 18:08:14 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:35:33 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ typedef struct s_point
 	int	x;
 	int	y;
 }	t_point;
+
+typedef struct s_pathnode
+{
+	t_point	pos;
+	t_point	from;
+	int		fscore;
+	int		gscore;
+}	t_pathnode;
+
 
 typedef struct s_map
 {
@@ -127,5 +136,7 @@ void	ft_draw_at(t_game *game, t_point pos);
 int		ft_initialize_images(t_game *game);
 //print_error.c
 int		ft_print_error(int errnum);
+//utils.c
+int		ft_safestrlen(const char *s);
 
 #endif //!SO_LONG_H
