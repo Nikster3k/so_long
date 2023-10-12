@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 12:49:55 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:22:29 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_check_map(t_map *map)
 	err = SUCCESS;
 	if (ft_check_validsigns(map))
 		return (INVALID_SIGNS);
-	if (map->pcount != 1 || map->ecount != 1)
+	if (map->pcount != 1 || map->ecount != 1 || map->ccount < 1)
 		return (PLAYER_NUM);
 	if (ft_clone_map(map, &copy))
 		return (MALLOC_FAIL);

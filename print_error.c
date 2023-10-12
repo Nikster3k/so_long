@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:19:09 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 12:56:26 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:44:32 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_print_error(int errnum)
 {
+	if (errnum == SUCCESS)
+		return (SUCCESS);
 	ft_printf("Error\n");
 	if (errnum == MALLOC_FAIL)
 		ft_printf("Malloc failure.\n");

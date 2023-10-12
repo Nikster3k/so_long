@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 12:46:02 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:08:14 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ typedef enum e_error
 	PLAYER_NUM
 }	t_error;
 
-typedef enum e_entity_type
+typedef enum e_tile_type
 {
-	FLOOR,
-	WALL,
-	COLLECTABLE,
-	PLAYER,
-	EXIT,
-	PATROL
+	FLOOR = '0',
+	WALL = '1',
+	COLLECTABLE = 'C',
+	PLAYER = 'P',
+	EXIT = 'E',
+	PATROL = 'G'
 }	t_etype;
 
 typedef struct s_point
@@ -71,7 +71,6 @@ typedef struct s_map
 typedef struct s_image
 {
 	void	*img_ptr;
-	t_point	size;
 }	t_image;
 
 typedef struct s_anim_img
@@ -79,11 +78,17 @@ typedef struct s_anim_img
 	t_list	*imgs;
 }	t_anim;
 
+typedef struct s_entity
+{
+	t_point	pos;
+	t_image	sprite;
+}	t_entity;
+
 typedef struct s_player
 {
-	t_point		pos;
-	t_image		sprite;
+	t_entity	ent;
 	int			collected;
+	int			moves;
 }	t_player;
 
 typedef struct s_game
@@ -95,6 +100,7 @@ typedef struct s_game
 	t_image		wall;
 	t_image		ground;
 	t_image		coin;
+	t_image		exit;
 }	t_game;
 
 //read_map_utils.c
@@ -111,11 +117,14 @@ char	ft_map_getat(t_map *map, t_point pos);
 //check_map_extra.c
 int		ft_check_for_leaks(t_map *filled);
 //player_movment.c
-int		ft_move_player(t_player *player, t_point dir);
+int		ft_move_entity(t_entity *ent, t_point dir);
 int		ft_check_player_move(t_game *game, t_point dir);
 //draw_fts.c
 void	ft_draw_map(t_game *game);
 void	ft_draw_player(t_game *game);
+void	ft_draw_at(t_game *game, t_point pos);
+//load_images.c
+int		ft_initialize_images(t_game *game);
 //print_error.c
 int		ft_print_error(int errnum);
 
