@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 19:36:05 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:43:36 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ static int	ft_read_file(t_map *map, int fd)
 {
 	char	*line;
 	int		linelen;
+	int		err;
 
 	line = (char *)2;
+	err = SUCCESS;
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
@@ -65,17 +67,17 @@ static int	ft_read_file(t_map *map, int fd)
 		if (map->size.x == 0)
 			map->size.x = linelen;
 		if (map->size.x != linelen)
-		{
-			free(line);
-			ft_free_map(map);
-			close(fd);
-			return (NOT_RECTANGLE);
-		}
+			err = NOT_RECTANGLE;
 		if (line != NULL)
 			map->lines[map->size.y++] = line;
 	}
+	if (err)
+	{
+		free(line);
+		ft_free_map(map);
+	}
 	close(fd);
-	return (SUCCESS);
+	return (err);
 }
 
 int	ft_read_map(t_map *map, const char *file)

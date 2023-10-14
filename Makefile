@@ -14,7 +14,9 @@ ALL_SRCS =	print_error.c utils.c\
 			check_map.c load_anim.c \
 			check_map_extra.c main.c read_map.c \
 			draw_fts.c read_map_utils.c \
-			player_movement.c load_images.c\
+			player_movement.c load_images.c \
+			shortest_path.c dynamic_list.c \
+			game_utils.c
 
 ALL_OBJS = $(ALL_SRCS:.c=.o)
 

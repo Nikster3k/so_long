@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 19:35:33 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:46:11 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,22 @@ typedef struct s_point
 typedef struct s_pathnode
 {
 	t_point	pos;
-	t_point	from;
-	int		fscore;
-	int		gscore;
-}	t_pathnode;
+	int		distance;
+}	t_path;
 
+typedef struct s_vector
+{
+	t_path	*data;
+	int		size;
+	int		capacity;
+}	t_vector;
 
 typedef struct s_map
 {
 	char	**lines;
 	t_point	size;
 	t_point	pstart;
+	t_point	exitpos;
 	int		pcount;
 	int		ccount;
 	int		ecount;
@@ -110,6 +115,8 @@ typedef struct s_game
 	t_image		ground;
 	t_image		coin;
 	t_image		exit;
+	int			minmoves;
+	int			savemoves;
 }	t_game;
 
 //read_map_utils.c
@@ -125,18 +132,33 @@ int		ft_check_map(t_map *map);
 char	ft_map_getat(t_map *map, t_point pos);
 //check_map_extra.c
 int		ft_check_for_leaks(t_map *filled);
+int		ft_clone_map(t_map	*map, t_map *copy);
 //player_movment.c
 int		ft_move_entity(t_entity *ent, t_point dir);
 int		ft_check_player_move(t_game *game, t_point dir);
 //draw_fts.c
+void	ft_swap_img(void *mlx_ptr, t_image *img, char *path);
 void	ft_draw_map(t_game *game);
 void	ft_draw_player(t_game *game);
 void	ft_draw_at(t_game *game, t_point pos);
+void	ft_draw_all(t_game *game);
 //load_images.c
 int		ft_initialize_images(t_game *game);
 //print_error.c
 int		ft_print_error(int errnum);
 //utils.c
 int		ft_safestrlen(const char *s);
+//dynamic_list.c
+int		ft_vector_add(t_vector *vect, t_path item);
+void	ft_vector_clear(t_vector *vec);
+int		ft_vector_remove(t_vector *vect, int indx);
+t_path	ft_vector_pop(t_vector *vect);
+//shortest_path.c
+int		ft_shortest_moves(t_map *map, t_point start, t_point goal);
+//game_utils.c
+int		ft_keyhook(int keycode, t_game *game);
+void	ft_initialize_func_hooks(t_game *game);
+int		ft_destroy_game(t_game *game, int err);
+void	ft_initialize_game(t_game *game);
 
 #endif //!SO_LONG_H

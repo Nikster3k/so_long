@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 19:58:54 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:11:17 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
 	if (map->lines[pos.y][pos.x] == 'C')
 		count->x++;
 	if (map->lines[pos.y][pos.x] == 'E')
+	{
 		count->y++;
+		map->exitpos = pos;
+	}
 	map->lines[pos.y][pos.x] = 'F';
 	ft_flood_fill(map, (t_point){pos.x + 1, pos.y}, tofill, count);
 	ft_flood_fill(map, (t_point){pos.x, pos.y + 1}, tofill, count);
@@ -58,7 +61,7 @@ static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
 	ft_flood_fill(map, (t_point){pos.x, pos.y - 1}, tofill, count);
 }
 
-static int	ft_clone_map(t_map	*map, t_map *copy)
+int	ft_clone_map(t_map	*map, t_map *copy)
 {
 	int		i;
 
@@ -97,6 +100,7 @@ int	ft_check_map(t_map *map)
 	ft_flood_fill(&copy, map->pstart, '0', &count);
 	if (count.x != map->ccount || count.y == 0)
 		err = INACCESSIBLE;
+	map->exitpos = copy.exitpos;
 	if (ft_check_for_leaks(&copy))
 		err = LEAK_MAP;
 	ft_free_map(&copy);

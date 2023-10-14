@@ -12,6 +12,10 @@
 		"type_traits": "c",
 		"utility": "c",
 		"cerrno": "c",
-		"so_long.h": "c"
+		"so_long.h": "c",
+		"map": "c",
+		"vector": "c",
+		"initializer_list": "c",
+		"list": "c"
 	}
 }

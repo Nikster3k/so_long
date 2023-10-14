@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:20:50 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 18:38:14 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:50:00 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,31 @@ int	ft_move_entity(t_entity *ent, t_point dir)
 	ent->pos.x += dir.x;
 	ent->pos.y += dir.y;
 	return (0);
+}
+
+void	ft_on_coin_collect(t_game *game)
+{
+	game->map.lines[game->player.ent.pos.y]
+	[game->player.ent.pos.x] = '0';
+	game->player.collected++;
+	if (game->player.collected == game->map.ccount)
+	{
+		game->minmoves = ft_shortest_moves(
+				&game->map, game->player.ent.pos, game->map.exitpos);
+		game->savemoves = game->player.moves;
+		ft_printf("Minmoves: %i", game->minmoves);
+		ft_swap_img(game->mlx_ptr, &game->exit, "textures/ExitOpen.xpm");
+		ft_draw_all(game);
+	}
+}
+
+void	ft_on_exit(t_game *game)
+{
+	if (game->player.moves - game->savemoves > game->minmoves)
+		ft_printf("You have not left in the minimum amount of moves\n");
+	else
+		ft_printf("Congratulations you beat the game!\n");
+	mlx_loop_end(game->mlx_ptr);
 }
 
 int	ft_check_player_move(t_game *game, t_point dir)
@@ -31,13 +56,9 @@ int	ft_check_player_move(t_game *game, t_point dir)
 		ft_move_entity(&game->player.ent, dir);
 		ft_printf("Moves: %i\n", ++(game->player.moves));
 		if (newpos == 'E' && game->map.ccount == game->player.collected)
-			mlx_loop_end(game->mlx_ptr); //change to Victory function
+			ft_on_exit(game);
 		else if (newpos == 'C')
-		{
-			game->map.lines[game->player.ent.pos.y]
-			[game->player.ent.pos.x] = '0';
-			game->player.collected++;
-		}
+			ft_on_coin_collect(game);
 		else if (newpos == 'G')
 			ft_printf("Kill player\n");
 	}
