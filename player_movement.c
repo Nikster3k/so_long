@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:20:50 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/14 19:50:00 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:31:19 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_on_coin_collect(t_game *game)
 		game->minmoves = ft_shortest_moves(
 				&game->map, game->player.ent.pos, game->map.exitpos);
 		game->savemoves = game->player.moves;
-		ft_printf("Minmoves: %i", game->minmoves);
 		ft_swap_img(game->mlx_ptr, &game->exit, "textures/ExitOpen.xpm");
 		ft_draw_all(game);
 	}
