@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:20:50 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/14 20:31:19 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/15 17:40:10 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	ft_check_player_move(t_game *game, t_point dir)
 			ft_on_coin_collect(game);
 		else if (newpos == 'G')
 			ft_printf("Kill player\n");
+		return (1);
 	}
 	return (0);
 }

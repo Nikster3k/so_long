@@ -48,8 +48,7 @@ typedef enum e_tile_type
 	WALL = '1',
 	COLLECTABLE = 'C',
 	PLAYER = 'P',
-	EXIT = 'E',
-	PATROL = 'G'
+	EXIT = 'E'
 }	t_etype;
 
 typedef struct s_point
