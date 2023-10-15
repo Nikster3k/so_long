@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:41:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 19:25:20 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:46:30 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,25 @@ int	ft_keyhook(int keycode, t_game *game)
 	return (0);
 }
 
+int	ft_loop_update(t_game *game)
+{
+	int			err;
+
+	err = ft_update_animations(&game->animator);
+	ft_draw_player(game);
+	return (err);
+}
+
 void	ft_initialize_func_hooks(t_game *game)
 {
 	mlx_hook(game->win_ptr, 17, 0, mlx_loop_end, game->mlx_ptr);
-	mlx_loop_hook(game->mlx_ptr, ft_update_animations, &game->animator);
+	mlx_loop_hook(game->mlx_ptr, ft_loop_update, game);
 	mlx_key_hook(game->win_ptr, ft_keyhook, game);
+}
+
+void	ft_empty_func(void *nothing)
+{
+	(void)nothing;
 }
 
 int	ft_destroy_game(t_game *game, int err)
@@ -61,5 +75,6 @@ int	ft_destroy_game(t_game *game, int err)
 		mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	free(game->enems);
+	ft_lstclear(&game->animator.anims, ft_empty_func);
 	return (ft_print_error(err));
 }

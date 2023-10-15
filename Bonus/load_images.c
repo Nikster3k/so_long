@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:34:14 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 18:47:05 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:38:59 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	ft_initialize_images(t_game *game)
 
 	size = IMG_SIZE;
 	ft_load_anim(game, &game->player.ent.sprite, "textures/Monster/",
-		(char *[]){"IdleTile1.xpm", "IdleTile2.xpm", NULL});
+		(char *[]){"IdleTile1.xpm", "IdleTile2.xpm",
+		"IdleTile3.xpm", "IdleTile4.xpm", NULL});
 	game->player.ent.pos = game->map.pstart;
 	game->wall.img_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
 			"textures/wall.xpm", &size, &size);

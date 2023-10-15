@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 19:07:39 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 19:27:24 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:47:43 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,20 @@
 
 int	ft_update_animations(t_animator *animator)
 {
-	static int	i = 0;
-	t_list		*current;
-	t_anim		*animdata;
+	static unsigned int	i = 0;
+	t_list				*current;
+	t_anim				*animdata;
 
 	current = animator->anims;
 	while (current != NULL)
 	{
-		if (i % 10000)
+		if (i % 100000000 == 0)
 		{
 			animdata = current->content;
-			if (animdata->current < animdata->animlen)
+			if (animdata->current < animdata->animlen - 1)
 				animdata->current++;
 			else
 				animdata->current = 0;
-			ft_printf("Updated animation current to %i\n", animdata->current);
 			current = current->next;
 		}
 		i++;
