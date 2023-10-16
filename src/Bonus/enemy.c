@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:07:54 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 13:33:53 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:46:50 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_initialize_enemies(t_game *game)
 		game->map.lines[pos.y][pos.x] = '0';
 		game->enems[i].movdir = (t_point){1, 0};
 		game->enems[i].base.sprite = game->enem_anim;
-		game->enems[i].base.sprite.current = i;
+		game->enems[i].base.sprite.current = i % game->enem_anim.animlen;
 		ft_lstadd_front(&game->animator.anims,
 			ft_lstnew(&game->enems[i].base.sprite));
 		i++;

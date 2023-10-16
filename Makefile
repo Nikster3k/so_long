@@ -5,7 +5,7 @@ LIB = libs/
 LIBFT_PATH = printf/
 GNL_PATH = GNL/
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 MLX_FLAGS = -lmlx -lXext -lX11
 
 GNL_SRCS =	src/GNL/get_next_line_bonus.c src/GNL/get_next_line_utils_bonus.c
@@ -59,10 +59,10 @@ $(LIB)$(GNL): $(GNL_OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-	
+
 bonus: $(LIB)$(LIBFT) $(LIB)$(GNL) $(BON_OBJS)
 	$(CC) $(CFLAGS) $(MLX_FLAGS) $(BON_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME)
-	@ echo "Bonus $(GREEN)$(NAME) CREATED! $(CLR_RMV)"
+	@ echo "$(GREEN)Bonus $(NAME) CREATED! $(CLR_RMV)"
 
 clean:
 	@ echo "$(YELLOW)Cleaning ...$(CLR_RMV)"
@@ -72,3 +72,7 @@ clean:
 
 fclean: clean
 	rm -f $(LIB)$(GNL) $(LIB)$(LIBFT) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

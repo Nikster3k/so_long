@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:34:14 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 16:20:48 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:01:32 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	ft_initialize_images(t_game *game)
 			"textures/Exit.xpm", &size, &size);
 	return (!game->coin.img_ptr || !game->wall.img_ptr
 		|| !game->ground.img_ptr || !game->exit.img_ptr
-		|| !game->player.ent.sprite.imgs || !game->enem_anim.imgs);
+		|| !game->player.ent.sprite.imgs
+		|| (!game->enem_anim.imgs && game->enem_anim.animlen != 0));
 }
 
 void	ft_swap_img(void *mlx_ptr, t_image *img, char *path)

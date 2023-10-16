@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:41:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 18:31:03 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:19:08 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ int	ft_keyhook(int keycode, t_game *game)
 	if (keycode == KEY_A)
 		success = ft_check_player_move(game, (t_point){-1, 0});
 	if (success)
+	{
 		ft_move_enemies(game);
+		mlx_clear_window(game->mlx_ptr, game->win_ptr);
+		ft_draw_map(game);
+		ft_draw_string(game);
+	}
 	if (ft_collision_check(&game->player, game->enems, game->map.gcount))
 		ft_on_enemycollision(game);
 	return (0);
@@ -38,8 +43,7 @@ static int	ft_loop_update(t_game *game)
 {
 	int			err;
 
-	err = ft_update_animations(&game->animator, 0.001f);
-	ft_draw_string(game);
+	err = ft_update_animations(&game->animator, 0.0003f);
 	ft_draw_enemies(game);
 	ft_draw_player(game);
 	return (err);

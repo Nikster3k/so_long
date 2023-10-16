@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:08:47 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 14:02:11 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:05:40 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_draw_string(t_game *game)
 	char	*number;
 	int		x;
 
-	x = 0;
+	x = game->map.size.x / 2;
 	while (x < game->map.size.x)
 		ft_draw_at(game, (t_point){x++, game->map.size.y});
 	number = ft_itoa(game->player.moves);
