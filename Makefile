@@ -44,10 +44,11 @@ BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 
 
-all: $(LIB)$(LIBFT) $(LIB)$(GNL) $(OBJS) $(NAME)
+all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME)
+$(NAME): $(LIB)$(LIBFT) $(LIB)$(GNL) $(MAN_OBJS)
+	$(CC) $(CFLAGS) $(MLX_FLAGS) $(MAN_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME)
+	@ echo "$(GREEN)$(NAME) CREATED! $(CLR_RMV)"
 
 $(LIB)$(LIBFT):
 	@ echo "$(YELLOW)Creating libftprintf.a Library.$(CLR_RMV)"
@@ -64,6 +65,7 @@ $(LIB)$(GNL): $(GNL_OBJS)
 	
 bonus: $(LIB)$(LIBFT) $(LIB)$(GNL) $(BON_OBJS)
 	$(CC) $(CFLAGS) $(MLX_FLAGS) $(BON_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME)
+	@ echo "Bonus $(GREEN)$(NAME) CREATED! $(CLR_RMV)"
 
 clean:
 	@ echo "$(YELLOW)Cleaning ...$(CLR_RMV)"
@@ -72,4 +74,4 @@ clean:
 	@ echo "$(GREEN)Cleaned!$(CLR_RMV)"
 
 fclean: clean
-	rm -f $(LIB)$(GNL) $(LIB)$(LIBFT)
+	rm -f $(LIB)$(GNL) $(LIB)$(LIBFT) $(NAME)
