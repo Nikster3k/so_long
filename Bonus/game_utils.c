@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:41:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 19:46:30 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:34:47 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_keyhook(int keycode, t_game *game)
 {
 	int	success;
 
+	success = 0;
 	if (keycode == KEY_ESCAPE)
 		mlx_loop_end(game->mlx_ptr);
 	if (keycode == KEY_W)
@@ -28,15 +29,18 @@ int	ft_keyhook(int keycode, t_game *game)
 		success = ft_check_player_move(game, (t_point){-1, 0});
 	if (success)
 		ft_move_enemies(game);
-	ft_draw_player(game);
+	if (ft_collision_check(&game->player, game->enems, game->map.gcount))
+		ft_on_enemycollision(game);
 	return (0);
 }
 
-int	ft_loop_update(t_game *game)
+static int	ft_loop_update(t_game *game)
 {
 	int			err;
 
-	err = ft_update_animations(&game->animator);
+	err = ft_update_animations(&game->animator, 0.001f);
+	ft_draw_string(game);
+	ft_draw_enemies(game);
 	ft_draw_player(game);
 	return (err);
 }
@@ -48,7 +52,7 @@ void	ft_initialize_func_hooks(t_game *game)
 	mlx_key_hook(game->win_ptr, ft_keyhook, game);
 }
 
-void	ft_empty_func(void *nothing)
+static void	ft_empty_func(void *nothing)
 {
 	(void)nothing;
 }
@@ -68,6 +72,8 @@ int	ft_destroy_game(t_game *game, int err)
 			mlx_destroy_image(game->mlx_ptr, game->exit.img_ptr);
 		if (game->player.ent.sprite.imgs != NULL)
 			ft_destroy_animation(game->mlx_ptr, &game->player.ent.sprite);
+		if (game->enem_anim.imgs != NULL)
+			ft_destroy_animation(game->mlx_ptr, &game->enems->base.sprite);
 	}
 	if (game->mlx_ptr != NULL && game->win_ptr != NULL)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);

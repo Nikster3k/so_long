@@ -6,26 +6,11 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:08:47 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 18:38:15 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:02:11 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	ft_swap_img(void *mlx_ptr, t_image *img, char *path)
-{
-	int		size;
-	void	*imgtmp;
-
-	size = IMG_SIZE;
-	imgtmp = img->img_ptr;
-	img->img_ptr = mlx_xpm_file_to_image(mlx_ptr,
-			path, &size, &size);
-	if (img->img_ptr == NULL)
-		img->img_ptr = imgtmp;
-	else
-		mlx_destroy_image(mlx_ptr, imgtmp);
-}
 
 void	ft_draw_map(t_game *game)
 {
@@ -67,13 +52,33 @@ void	ft_draw_player(t_game *game)
 {
 	mlx_put_image_to_window(
 		game->mlx_ptr, game->win_ptr,
-		game->player.ent.sprite.imgs[game->player.ent.sprite.current].img_ptr,
+		game->player.ent.sprite
+		.imgs[(int)game->player.ent.sprite.current].img_ptr,
 		game->player.ent.pos.x * IMG_SIZE,
 		game->player.ent.pos.y * IMG_SIZE);
+}
+
+void	ft_draw_string(t_game *game)
+{
+	char	*joined;
+	char	*number;
+	int		x;
+
+	x = 0;
+	while (x < game->map.size.x)
+		ft_draw_at(game, (t_point){x++, game->map.size.y});
+	number = ft_itoa(game->player.moves);
+	joined = ft_strjoin("Moves: ", number);
+	mlx_string_put(game->mlx_ptr, game->win_ptr,
+		game->win_size.x / 2,
+		game->win_size.y - 1, 0xFFFFFFFF, joined);
+	free(number);
+	free(joined);
 }
 
 void	ft_draw_all(t_game *game)
 {
 	ft_draw_map(game);
+	ft_draw_enemies(game);
 	ft_draw_player(game);
 }

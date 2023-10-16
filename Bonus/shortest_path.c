@@ -6,21 +6,11 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:41:51 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 15:25:13 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:14:57 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	ft_pos_isvalid(t_map *map, t_point pos)
-{
-	char	a;
-
-	a = ft_map_getat(map, pos);
-	if (a == '\0' || a == '1' || a == 'X')
-		return (0);
-	return (1);
-}
 
 static void	ft_check_all_dirs(t_map *copy, t_path *current, t_vector *queue)
 {

@@ -6,11 +6,26 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:07:54 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 19:09:06 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:33:53 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	ft_collision_check(t_player *player, t_enemy *enemies, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (player->ent.pos.x == enemies[i].base.pos.x
+			&& player->ent.pos.y == enemies[i].base.pos.y)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	ft_initialize_enemies(t_game *game)
 {
@@ -24,12 +39,13 @@ int	ft_initialize_enemies(t_game *game)
 	while (i < game->map.gcount)
 	{
 		pos = ft_getposof(&game->map, 'G');
-		if (pos.x == -1)
-			ft_printf("WTF?");
 		game->enems[i].base.pos = pos;
 		game->map.lines[pos.y][pos.x] = '0';
 		game->enems[i].movdir = (t_point){1, 0};
 		game->enems[i].base.sprite = game->enem_anim;
+		game->enems[i].base.sprite.current = i;
+		ft_lstadd_front(&game->animator.anims,
+			ft_lstnew(&game->enems[i].base.sprite));
 		i++;
 	}
 	return (SUCCESS);
@@ -39,9 +55,18 @@ void	ft_draw_enemy(t_game *game, t_enemy *enem)
 {
 	mlx_put_image_to_window(
 		game->mlx_ptr, game->win_ptr,
-		enem->base.sprite.imgs->img_ptr,
+		enem->base.sprite.imgs[(int)enem->base.sprite.current].img_ptr,
 		enem->base.pos.x * IMG_SIZE,
 		enem->base.pos.y * IMG_SIZE);
+}
+
+void	ft_draw_enemies(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->map.gcount)
+		ft_draw_enemy(game, &game->enems[i++]);
 }
 
 void	ft_move_enemies(t_game *game)
@@ -66,7 +91,6 @@ void	ft_move_enemies(t_game *game)
 			ft_draw_at(game, enems[i].base.pos);
 			ft_move_entity(&enems[i].base, enems[i].movdir);
 		}
-		ft_draw_enemy(game, &enems[i]);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 19:46:39 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:34:08 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_anim_img
 {
 	t_image	*imgs;
 	int		animlen;
-	int		current;
+	float	current;
 }	t_anim;
 
 typedef struct s_entity
@@ -123,6 +123,7 @@ typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	t_point		win_size;
 	t_map		map;
 	t_player	player;
 	t_enemy		*enems;
@@ -151,18 +152,21 @@ int		ft_check_for_leaks(t_map *filled);
 int		ft_clone_map(t_map	*map, t_map *copy);
 //map_utils.c
 t_point	ft_getposof(t_map *map, char c);
+int		ft_pos_isvalid(t_map *map, t_point pos);
 //player_movment.c
 int		ft_move_entity(t_entity *ent, t_point dir);
 int		ft_check_player_move(t_game *game, t_point dir);
+void	ft_on_enemycollision(t_game *game);
 //draw_fts.c
-void	ft_swap_img(void *mlx_ptr, t_image *img, char *path);
 void	ft_draw_map(t_game *game);
 void	ft_draw_player(t_game *game);
 void	ft_draw_at(t_game *game, t_point pos);
 void	ft_draw_all(t_game *game);
+void	ft_draw_string(t_game *game);
 //load_images.c
 void	*ft_load_image(void *mlx_ptr, char *filepath);
 int		ft_initialize_images(t_game *game);
+void	ft_swap_img(void *mlx_ptr, t_image *img, char *path);
 //load_anim.c
 int		ft_load_anim(t_game *game, t_anim *anim, const char *filepath,
 			char **filenames);
@@ -184,9 +188,12 @@ void	ft_initialize_func_hooks(t_game *game);
 int		ft_destroy_game(t_game *game, int err);
 void	ft_initialize_game(t_game *game);
 //enemy.c
+int		ft_collision_check(t_player *player, t_enemy *enemies, int size);
 int		ft_initialize_enemies(t_game *game);
 void	ft_move_enemies(t_game *game);
+void	ft_draw_enemy(t_game *game, t_enemy *enem);
+void	ft_draw_enemies(t_game *game);
 //animator.c
-int		ft_update_animations(t_animator *animator);
+int		ft_update_animations(t_animator *animator, float delta);
 
 #endif //!SO_LONG_H

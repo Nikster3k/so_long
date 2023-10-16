@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:56:26 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 17:09:30 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:10:23 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_check_match(char c, const char *set)
 	return (0);
 }
 
-int	ft_check_validsigns(t_map *map)
+static int	ft_check_validsigns(t_map *map)
 {
 	char	sign;
 	int		x;
@@ -40,11 +40,8 @@ int	ft_check_validsigns(t_map *map)
 			map->ccount += (sign == COLLECTABLE);
 			map->gcount += (sign == PATROL);
 			map->ecount += (sign == EXIT);
-			if (map->lines[y][x] == PLAYER)
-			{
+			if (sign == PLAYER && map->pcount++ < 1)
 				map->pstart = (t_point){x, y};
-				map->pcount++;
-			}
 			x++;
 		}
 		y++;
@@ -54,18 +51,18 @@ int	ft_check_validsigns(t_map *map)
 
 static void	ft_flood_fill(t_map *map, t_point pos, char tofill, t_point *count)
 {
-	if (pos.x >= map->size.x || pos.y >= map->size.y
-		|| pos.y < 0 || pos.x < 0
-		|| map->lines[pos.y][pos.x] == '1' || map->lines[pos.y][pos.x] == 'F')
+	if (!ft_pos_isvalid(map, pos))
 		return ;
-	if (map->lines[pos.y][pos.x] == 'C')
+	if (map->lines[pos.y][pos.x] == COLLECTABLE)
 		count->x++;
-	if (map->lines[pos.y][pos.x] == 'E')
+	if (map->lines[pos.y][pos.x] == PLAYER)
+		map->pstart = pos;
+	if (map->lines[pos.y][pos.x] == EXIT)
 	{
 		count->y++;
 		map->exitpos = pos;
 	}
-	map->lines[pos.y][pos.x] = 'F';
+	map->lines[pos.y][pos.x] = 'X';
 	ft_flood_fill(map, (t_point){pos.x + 1, pos.y}, tofill, count);
 	ft_flood_fill(map, (t_point){pos.x, pos.y + 1}, tofill, count);
 	ft_flood_fill(map, (t_point){pos.x - 1, pos.y}, tofill, count);
