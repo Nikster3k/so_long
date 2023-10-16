@@ -1,12 +1,9 @@
 NAME = so_long
 GNL = gnl.a
 LIBFT = libftprintf.a
-SRCS = src/
 LIB = libs/
 LIBFT_PATH = printf/
 GNL_PATH = GNL/
-MAN = $(SRCS)Mandatory/
-BON = $(SRCS)Bonus/
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 MLX_FLAGS = -lmlx -lXext -lX11
