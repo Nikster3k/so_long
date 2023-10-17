@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dynamic_list.c                                     :+:      :+:    :+:   */
+/*   dynamic_list_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 16:59:29 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/14 18:49:29 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:59:33 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static int	ft_vector_double(t_vector *vect)
 {

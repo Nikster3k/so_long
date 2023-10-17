@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   map_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:11:50 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 12:07:38 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:59:33 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	ft_pos_isvalid(t_map *map, t_point pos)
 {
 	char	a;
 
 	a = ft_map_getat(map, pos);
-	if (a == '\0' || a == '1' || a == 'X')
+	if (a == '\0' || a == '1' || a == 'X' || a == 'G')
 		return (0);
 	return (1);
 }

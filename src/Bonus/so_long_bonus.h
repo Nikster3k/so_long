@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 18:11:11 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:58:17 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <stdlib.h>
 # include <fcntl.h>
@@ -105,6 +105,8 @@ typedef struct s_enemy
 {
 	t_entity	base;
 	t_point		movdir;
+	float		x;
+	float		y;
 }	t_enemy;
 
 typedef struct s_player
@@ -187,13 +189,16 @@ int		ft_keyhook(int keycode, t_game *game);
 void	ft_initialize_func_hooks(t_game *game);
 int		ft_destroy_game(t_game *game, int err);
 void	ft_initialize_game(t_game *game);
+void	ft_empty_func(void *nothing);
 //enemy.c
-int		ft_collision_check(t_player *player, t_enemy *enemies, int size);
 int		ft_initialize_enemies(t_game *game);
-void	ft_move_enemies(t_game *game);
+void	ft_move_enemies(t_game *game, float delta);
 void	ft_draw_enemy(t_game *game, t_enemy *enem);
 void	ft_draw_enemies(t_game *game);
+//enemy_utils.c
+int		ft_collision_check(t_player *player, t_enemy *enemies, int size);
+void	ft_kill_all(t_game *game);
 //animator.c
 int		ft_update_animations(t_animator *animator, float delta);
 
-#endif //!SO_LONG_H
+#endif //!SO_LONG_BONUS_H

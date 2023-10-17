@@ -1,4 +1,5 @@
 NAME = so_long
+NAME_B = so_long_bonus
 GNL = gnl.a
 LIBFT = libftprintf.a
 LIB = libs/
@@ -12,16 +13,16 @@ GNL_SRCS =	src/GNL/get_next_line_bonus.c src/GNL/get_next_line_utils_bonus.c
 
 GNL_OBJS = $(GNL_SRCS:.c=.o)
 
-BON_SRCS =	src/Bonus/animator.c src/Bonus/load_images.c \
-			src/Bonus/check_map.c src/Bonus/main.c \
-			src/Bonus/check_map_extra.c src/Bonus/map_utils.c \
-			src/Bonus/draw_fts.c src/Bonus/player_movement.c \
-			src/Bonus/dynamic_list.c src/Bonus/print_error.c \
-			src/Bonus/enemy.c src/Bonus/read_map.c \
-			src/Bonus/game_utils.c src/Bonus/read_map_utils.c \
-			src/Bonus/get_next_line_bonus.c src/Bonus/shortest_path.c \
-			src/Bonus/get_next_line_utils_bonus.c src/Bonus/utils.c \
-			src/Bonus/load_anim.c \
+BON_SRCS =	src/Bonus/animator_bonus.c src/Bonus/load_anim_bonus.c \
+			src/Bonus/check_map_bonus.c src/Bonus/load_images_bonus.c \
+			src/Bonus/check_map_extra_bonus.c src/Bonus/main_bonus.c \
+			src/Bonus/draw_fts_bonus.c src/Bonus/map_utils_bonus.c \
+			src/Bonus/dynamic_list_bonus.c src/Bonus/player_movement_bonus.c \
+			src/Bonus/enemy_bonus.c src/Bonus/print_error_bonus.c \
+			src/Bonus/enemy_utils_bonus.c src/Bonus/read_map_bonus.c \
+			src/Bonus/game_utils_bonus.c src/Bonus/read_map_utils_bonus.c \
+			src/Bonus/shortest_path_bonus.c src/Bonus/utils_bonus.c \
+
 
 BON_OBJS = $(BON_SRCS:.c=.o)
 
@@ -40,12 +41,15 @@ YELLOW		:= \033[1;33m
 BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 
-
 all: $(NAME)
 
 $(NAME): $(LIB)$(LIBFT) $(LIB)$(GNL) $(MAN_OBJS)
 	$(CC) $(CFLAGS) $(MLX_FLAGS) $(MAN_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME)
 	@ echo "$(GREEN)$(NAME) CREATED! $(CLR_RMV)"
+
+$(NAME_B): $(LIB)$(LIBFT) $(LIB)$(GNL) $(BON_OBJS)
+	$(CC) $(CFLAGS) $(MLX_FLAGS) $(BON_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME_B)
+	@ echo "$(GREEN)Bonus $(NAME) CREATED! $(CLR_RMV)"
 
 $(LIB)$(LIBFT):
 	@ echo "$(YELLOW)Creating libftprintf.a Library.$(CLR_RMV)"
@@ -60,9 +64,7 @@ $(LIB)$(GNL): $(GNL_OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(LIB)$(LIBFT) $(LIB)$(GNL) $(BON_OBJS)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) $(BON_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME)
-	@ echo "$(GREEN)Bonus $(NAME) CREATED! $(CLR_RMV)"
+bonus: $(NAME_B)
 
 clean:
 	@ echo "$(YELLOW)Cleaning ...$(CLR_RMV)"
@@ -71,8 +73,8 @@ clean:
 	@ echo "$(GREEN)Cleaned!$(CLR_RMV)"
 
 fclean: clean
-	rm -f $(LIB)$(GNL) $(LIB)$(LIBFT) $(NAME)
+	rm -f $(LIB)$(GNL) $(LIB)$(LIBFT) $(NAME) $(NAME_B)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

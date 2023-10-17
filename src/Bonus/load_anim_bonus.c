@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_anim.c                                        :+:      :+:    :+:   */
+/*   load_anim_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:54:02 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 19:19:10 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:58:52 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static int	ft_count_filenames(char **filenames)
 {

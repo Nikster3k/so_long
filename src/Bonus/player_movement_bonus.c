@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_movement.c                                  :+:      :+:    :+:   */
+/*   player_movement_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:20:50 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 11:57:11 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:59:33 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	ft_move_entity(t_entity *ent, t_point dir)
 {
@@ -30,6 +30,7 @@ static void	ft_on_coin_collect(t_game *game)
 				&game->map, game->player.ent.pos, game->map.exitpos);
 		game->savemoves = game->player.moves;
 		ft_swap_img(game->mlx_ptr, &game->exit, "textures/ExitOpen.xpm");
+		ft_kill_all(game);
 		ft_draw_all(game);
 	}
 }

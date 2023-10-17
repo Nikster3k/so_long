@@ -16,6 +16,8 @@
 		"map": "c",
 		"vector": "c",
 		"initializer_list": "c",
-		"list": "c"
+		"list": "c",
+		"time.h": "c",
+		"so_long_bonus.h": "c"
 	}
 }

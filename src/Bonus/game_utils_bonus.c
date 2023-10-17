@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_utils.c                                       :+:      :+:    :+:   */
+/*   game_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:41:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 20:19:08 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:58:57 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	ft_keyhook(int keycode, t_game *game)
 {
@@ -29,23 +29,22 @@ int	ft_keyhook(int keycode, t_game *game)
 		success = ft_check_player_move(game, (t_point){-1, 0});
 	if (success)
 	{
-		ft_move_enemies(game);
 		mlx_clear_window(game->mlx_ptr, game->win_ptr);
 		ft_draw_map(game);
 		ft_draw_string(game);
 	}
-	if (ft_collision_check(&game->player, game->enems, game->map.gcount))
-		ft_on_enemycollision(game);
 	return (0);
 }
 
 static int	ft_loop_update(t_game *game)
 {
-	int			err;
+	int				err;
 
-	err = ft_update_animations(&game->animator, 0.0003f);
-	ft_draw_enemies(game);
+	ft_move_enemies(game, 0.0005f);
+	err = ft_update_animations(&game->animator, 0.001f);
 	ft_draw_player(game);
+	if (ft_collision_check(&game->player, game->enems, game->map.gcount))
+		ft_on_enemycollision(game);
 	return (err);
 }
 
@@ -56,7 +55,7 @@ void	ft_initialize_func_hooks(t_game *game)
 	mlx_key_hook(game->win_ptr, ft_keyhook, game);
 }
 
-static void	ft_empty_func(void *nothing)
+void	ft_empty_func(void *nothing)
 {
 	(void)nothing;
 }

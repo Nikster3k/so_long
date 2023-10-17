@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shortest_path.c                                    :+:      :+:    :+:   */
+/*   shortest_path_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 18:41:51 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/16 12:14:57 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:58:39 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static void	ft_check_all_dirs(t_map *copy, t_path *current, t_vector *queue)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map_utils.c                                   :+:      :+:    :+:   */
+/*   read_map_utils_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/15 16:44:55 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:58:39 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static	int	line_count(const char *file, int *count)
 {
