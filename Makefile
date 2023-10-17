@@ -72,7 +72,7 @@ clean:
 
 fclean: clean
 	(cd $(LIBFT_PATH) && make fclean)
-	rm -f $(SRC)$(GNL_PATH)$(GNL) $(LIBFT_PATH)$(LIBFT) $(NAME) $(NAME_B)
+	rm -f $(GNL) $(LIBFT) $(NAME) $(NAME_B)
 
 re: fclean all
 
