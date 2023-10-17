@@ -1,10 +1,8 @@
 NAME = so_long
 NAME_B = so_long_bonus
-GNL = gnl.a
-LIBFT = libftprintf.a
-LIB = libs/
+GNL = src/GNL/gnl.a
+LIBFT = printf/libftprintf.a
 LIBFT_PATH = printf/
-GNL_PATH = GNL/
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 MLX_FLAGS = -lmlx -lXext -lX11
@@ -43,22 +41,22 @@ CYAN 		:= \033[1;36m
 
 all: $(NAME)
 
-$(NAME): $(LIB)$(LIBFT) $(LIB)$(GNL) $(MAN_OBJS)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) $(MAN_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(GNL) $(MAN_OBJS)
+	$(CC) $(CFLAGS) $(MLX_FLAGS) $(MAN_OBJS) $(GNL) $(LIBFT) -o $(NAME)
 	@ echo "$(GREEN)$(NAME) CREATED! $(CLR_RMV)"
 
-$(NAME_B): $(LIB)$(LIBFT) $(LIB)$(GNL) $(BON_OBJS)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) $(BON_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME_B)
+$(NAME_B): $(LIBFT) $(GNL) $(BON_OBJS)
+	$(CC) $(CFLAGS) $(MLX_FLAGS) $(BON_OBJS) $(GNL) $(LIBFT) -o $(NAME_B)
 	@ echo "$(GREEN)$(NAME_B) CREATED! $(CLR_RMV)"
 
-$(LIB)$(LIBFT):
+$(LIBFT):
 	@ echo "$(YELLOW)Creating libftprintf.a Library.$(CLR_RMV)"
-	(cd $(LIBFT_PATH) && make all && mv $(LIBFT) ../$(LIB))
+	(cd $(LIBFT_PATH) && make all)
 	@ echo "$(GREEN)libftprintf.a Library CREATED!$(CLR_RMV)"
 
-$(LIB)$(GNL): $(GNL_OBJS)
+$(GNL): $(GNL_OBJS)
 	@ echo "$(YELLOW)Creating $(GNL) Library.$(CLR_RMV)"
-	ar rcs $(LIB)$(GNL) $(GNL_OBJS)
+	ar rcs $(GNL) $(GNL_OBJS)
 	@ echo "$(GREEN)$(GNL) Library CREATED!$(CLR_RMV)"
 
 %.o: %.c
@@ -73,7 +71,8 @@ clean:
 	@ echo "$(GREEN)Cleaned!$(CLR_RMV)"
 
 fclean: clean
-	rm -f $(LIB)$(GNL) $(LIB)$(LIBFT) $(NAME) $(NAME_B)
+	(cd $(LIBFT_PATH) && make fclean)
+	rm -f $(SRC)$(GNL_PATH)$(GNL) $(LIBFT_PATH)$(LIBFT) $(NAME) $(NAME_B)
 
 re: fclean all
 
