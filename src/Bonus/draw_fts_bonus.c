@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:08:47 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/17 15:59:33 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:43:38 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,10 @@ void	ft_draw_string(t_game *game)
 {
 	char	*joined;
 	char	*number;
-	int		x;
 
-	x = game->map.size.x / 2;
-	while (x < game->map.size.x)
-		ft_draw_at(game, (t_point){x++, game->map.size.y});
+	ft_draw_block(game,
+		(t_point){game->win_size.x / 2, game->win_size.y - 12},
+		80, 12);
 	number = ft_itoa(game->player.moves);
 	joined = ft_strjoin("Moves: ", number);
 	mlx_string_put(game->mlx_ptr, game->win_ptr,
@@ -79,6 +78,7 @@ void	ft_draw_string(t_game *game)
 void	ft_draw_all(t_game *game)
 {
 	ft_draw_map(game);
+	ft_draw_string(game);
 	ft_draw_enemies(game);
 	ft_draw_player(game);
 }

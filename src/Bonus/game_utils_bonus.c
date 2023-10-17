@@ -6,11 +6,12 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:41:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/17 16:39:23 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:41:59 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
+#include <time.h>
 
 int	ft_keyhook(int keycode, t_game *game)
 {
@@ -28,23 +29,26 @@ int	ft_keyhook(int keycode, t_game *game)
 	if (keycode == KEY_A)
 		success = ft_check_player_move(game, (t_point){-1, 0});
 	if (success)
-	{
-		mlx_clear_window(game->mlx_ptr, game->win_ptr);
-		ft_draw_map(game);
 		ft_draw_string(game);
-	}
 	return (0);
 }
 
 static int	ft_loop_update(t_game *game)
 {
+	static double	deltatime = 0;
+	struct timespec	start;
+	struct timespec	end;
 	int				err;
 
-	ft_move_enemies(game, 0.0002f);
-	err = ft_update_animations(&game->animator, 0.0005f);
+	clock_gettime(CLOCK_REALTIME, &start);
+	ft_move_enemies(game, deltatime);
+	err = ft_update_animations(&game->animator, deltatime * 4);
 	ft_draw_player(game);
 	if (ft_collision_check(&game->player, game->enems, game->map.gcount))
 		ft_on_enemycollision(game);
+	clock_gettime(CLOCK_REALTIME, &end);
+	deltatime = (end.tv_sec - start.tv_sec) * 1e6;
+	deltatime += (end.tv_nsec - start.tv_nsec) / 1e6;
 	return (err);
 }
 

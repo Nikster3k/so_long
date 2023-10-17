@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:20:50 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/17 15:59:33 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:39:23 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	ft_check_player_move(t_game *game, t_point dir)
 			ft_on_exit(game);
 		else if (newpos == 'C')
 			ft_on_coin_collect(game);
-		if (ft_collision_check(&game->player, game->enems, game->map.gcount))
-			ft_on_enemycollision(game);
 		return (1);
 	}
 	return (0);

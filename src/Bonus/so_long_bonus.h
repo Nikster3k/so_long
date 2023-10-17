@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:12:53 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/17 15:58:17 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:24:15 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int		ft_destroy_animation(void *mlx_ptr, t_anim *anim);
 int		ft_print_error(int errnum);
 //utils.c
 int		ft_safestrlen(const char *s);
+void	ft_draw_block(t_game *game, t_point start, int sizex, int sizey);
 //dynamic_list.c
 int		ft_vector_add(t_vector *vect, t_path item);
 void	ft_vector_clear(t_vector *vec);
