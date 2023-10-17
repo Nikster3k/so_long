@@ -49,7 +49,7 @@ $(NAME): $(LIB)$(LIBFT) $(LIB)$(GNL) $(MAN_OBJS)
 
 $(NAME_B): $(LIB)$(LIBFT) $(LIB)$(GNL) $(BON_OBJS)
 	$(CC) $(CFLAGS) $(MLX_FLAGS) $(BON_OBJS) $(LIB)$(GNL) $(LIB)$(LIBFT) -o $(NAME_B)
-	@ echo "$(GREEN)Bonus $(NAME) CREATED! $(CLR_RMV)"
+	@ echo "$(GREEN)$(NAME_B) CREATED! $(CLR_RMV)"
 
 $(LIB)$(LIBFT):
 	@ echo "$(YELLOW)Creating libftprintf.a Library.$(CLR_RMV)"
@@ -62,7 +62,7 @@ $(LIB)$(GNL): $(GNL_OBJS)
 	@ echo "$(GREEN)$(GNL) Library CREATED!$(CLR_RMV)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(MLX_FLAGS) -c $< -o $@
 
 bonus: $(NAME_B)
 

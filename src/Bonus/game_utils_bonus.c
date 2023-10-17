@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:41:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/17 15:58:57 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:39:23 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static int	ft_loop_update(t_game *game)
 {
 	int				err;
 
-	ft_move_enemies(game, 0.0005f);
-	err = ft_update_animations(&game->animator, 0.001f);
+	ft_move_enemies(game, 0.0002f);
+	err = ft_update_animations(&game->animator, 0.0005f);
 	ft_draw_player(game);
 	if (ft_collision_check(&game->player, game->enems, game->map.gcount))
 		ft_on_enemycollision(game);

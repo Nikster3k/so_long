@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:07:54 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/17 15:59:33 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:08:15 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,9 @@ int	ft_initialize_enemies(t_game *game)
 
 void	ft_draw_enemy(t_game *game, t_enemy *enem)
 {
-	mlx_put_image_to_window(
-		game->mlx_ptr, game->win_ptr,
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
 		enem->base.sprite.imgs[(int)enem->base.sprite.current].img_ptr,
-		enem->base.pos.x * IMG_SIZE,
-		enem->base.pos.y * IMG_SIZE);
+		enem->base.pos.x * IMG_SIZE, enem->base.pos.y * IMG_SIZE);
 }
 
 void	ft_draw_enemies(t_game *game)
@@ -78,15 +76,14 @@ void	ft_move_enemies(t_game *game, float delta)
 	enems = game->enems;
 	while (i < game->map.gcount)
 	{
-		newpos = ft_map_getat(
-				&game->map, (t_point){
-				(int)(enems[i].x + enems[i].movdir.x * delta),
-				(int)(enems[i].y + enems[i].movdir.y * delta)});
+		newpos = ft_map_getat(&game->map, (t_point){(int)(enems[i].x
+					+ enems[i].movdir.x * delta), (int)(enems[i].y
+					+ enems[i].movdir.y * delta)});
 		if (newpos != 0)
 		{
 			if (newpos == '1')
-				enems[i].movdir = (t_point){
-					enems[i].movdir.x * -1, enems[i].movdir.y * -1};
+				enems[i].movdir = (t_point){enems[i].movdir.x * -1,
+					enems[i].movdir.y * -1};
 			ft_update_enem_pos(game, &enems[i], delta);
 		}
 		i++;

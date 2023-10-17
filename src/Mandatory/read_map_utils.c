@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:16:48 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/14 16:43:36 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:37:04 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static	int	line_count(const char *file, int *count)
 {
 	int		fd;
+	int		hasnl;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
@@ -26,10 +27,15 @@ static	int	line_count(const char *file, int *count)
 	{
 		line = get_next_line(fd);
 		if (line != NULL)
+		{
 			(*count)++;
+			hasnl = (line[ft_strlen(line) - 1] == '\n');
+		}
 		free(line);
 	}
 	close(fd);
+	if (hasnl)
+		return (INVALID_MAP);
 	return (SUCCESS);
 }
 
@@ -83,11 +89,13 @@ static int	ft_read_file(t_map *map, int fd)
 int	ft_read_map(t_map *map, const char *file)
 {
 	int		fd;
+	int		err;
 	int		linecount;
 
 	ft_init_map(map);
-	if (line_count(file, &linecount))
-		return (NO_FILE);
+	err = line_count(file, &linecount);
+	if (err)
+		return (err);
 	if (linecount < 2)
 		return (INVALID_MAP);
 	map->lines = ft_calloc(sizeof(char *), linecount);

@@ -6,7 +6,7 @@
 /*   By: nsassenb <nsassenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:19:09 by nsassenb          #+#    #+#             */
-/*   Updated: 2023/10/12 15:44:32 by nsassenb         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:34:57 by nsassenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_print_error(int errnum)
 	else if (errnum == INACCESSIBLE)
 		ft_printf("Inaccessible coins or exit.\n");
 	else if (errnum == INVALID_MAP)
-		ft_printf("Map is not possible\n");
+		ft_printf("Map is invalid\n");
 	else if (errnum == LEAK_MAP)
 		ft_printf("Map is not enclosed.\n");
 	else if (errnum == PLAYER_NUM)
