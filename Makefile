@@ -62,7 +62,7 @@ $(LIB)$(GNL): $(GNL_OBJS)
 	@ echo "$(GREEN)$(GNL) Library CREATED!$(CLR_RMV)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(MLX_FLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: $(NAME_B)
 
