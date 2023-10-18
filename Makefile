@@ -4,7 +4,7 @@ GNL = src/GNL/gnl.a
 LIBFT = printf/libftprintf.a
 LIBFT_PATH = printf/
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 MLX_FLAGS = -lmlx -lXext -lX11
 
 GNL_SRCS =	src/GNL/get_next_line_bonus.c src/GNL/get_next_line_utils_bonus.c
